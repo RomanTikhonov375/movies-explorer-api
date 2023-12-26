@@ -11,14 +11,14 @@ import NotFoundError from './utils/errors/NotFoundError';
 import errorHandler from './utils/errors/errorHandler';
 
 const { PORT = 3000 } = process.env;
-const { DB_CONN = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
+const { NODE_ENV, DB_CONN } = process.env;
 config();
 const app = express();
 app.use(cors());
 app.use(helmet());
 app.use(limiter);
 
-mongoose.connect(DB_CONN);
+mongoose.connect(NODE_ENV ? DB_CONN : 'mongodb://127.0.0.1:27017/bitfilmsdb');
 app.use(json());
 app.use(requestLogger);
 app.use(router);
