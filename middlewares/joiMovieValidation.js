@@ -1,5 +1,5 @@
 import { celebrate, Joi } from 'celebrate';
-import URLREGEXP from '../utils/constans';
+import { URLREGEXP } from '../utils/constans';
 
 export const checkPostMovieValidation = celebrate({
   body: Joi.object().keys({
@@ -19,6 +19,6 @@ export const checkPostMovieValidation = celebrate({
 
 export const checkDeleteMovieValidation = celebrate({
   params: Joi.object().keys({
-    id: Joi.string().alphanum().length(24),
+    id: Joi.string().required().hex().length(24),
   }),
 });

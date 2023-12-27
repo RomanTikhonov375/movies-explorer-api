@@ -7,7 +7,8 @@ import NoAccessRightsError from '../utils/errors/NoAccessRightsError';
 
 export const getMovies = async (req, res, next) => {
   try {
-    const movies = await Movie.find({});
+    const owner = req.user._id;
+    const movies = await Movie.find({ owner });
     return res.status(StatusCodes.OK).send(movies); // массив карточек
   } catch (error) {
     return next(error);

@@ -86,6 +86,9 @@ async function findByIdAndUpdate(reqId, reqBody, next) {
     if (error instanceof mongoose.Error.DocumentNotFoundError) {
       return next(new NotFoundError('Пользователь по id не найдена'));
     }
+    if (error.code === ERROR_CODE_DUPLICATE_MONGO) {
+      return next(new UserAlreadExistsError('Пользователь с таким Email уже существует'));
+    }
     return next(error);
   }
 }

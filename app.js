@@ -9,23 +9,24 @@ import { requestLogger, errorLogger } from './middlewares/logger';
 import router from './routes/index';
 import NotFoundError from './utils/errors/NotFoundError';
 import errorHandler from './utils/errors/errorHandler';
+import {
+  NODE_ENV, PORT, DB_CONN, DB_CONN_DEV,
+} from './utils/constans';
 
-const { PORT = 3000 } = process.env;
-const { NODE_ENV, DB_CONN } = process.env;
 config();
 const app = express();
 app.use(cors());
 app.use(helmet());
 app.use(limiter);
 
-mongoose.connect(NODE_ENV ? DB_CONN : 'mongodb://127.0.0.1:27017/bitfilmsdb');
+mongoose.connect(NODE_ENV ? DB_CONN : DB_CONN_DEV);
 app.use(json());
 app.use(requestLogger);
 app.use(router);
-app.use(errorLogger);
 app.use((req, res) => {
   throw new NotFoundError('Страница не найдена');
 });
+app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
 app.listen(PORT, () => {

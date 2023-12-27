@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import URLREGEXP from '../utils/constans';
+import { URLREGEXP } from '../utils/constans';
 
 const movieSheme = new mongoose.Schema(
   {
