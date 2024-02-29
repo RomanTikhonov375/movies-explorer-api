@@ -69,16 +69,17 @@ export const login = async (req, res, next) => {
   }
 };
 
-async function findByIdAndUpdate(reqId, reqBody, next) {
+export const updateProfile = async (req, res, next) => {
   try {
-    const currentUser = await User.findByIdAndUpdate(reqId, reqBody, {
+    const currentUser = await User.findByIdAndUpdate(req.user._id, { ...req.body }, {
       new: true,
       runValidators: true,
     });
+
     if (!currentUser) {
       throw new mongoose.Error.DocumentNotFoundError();
     }
-    return currentUser;
+    return res.status(StatusCodes.OK).send(currentUser);
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       return next(new BadRequestError(error));
@@ -89,15 +90,6 @@ async function findByIdAndUpdate(reqId, reqBody, next) {
     if (error.code === ERROR_CODE_DUPLICATE_MONGO) {
       return next(new UserAlreadExistsError('Пользователь с таким Email уже существует'));
     }
-    return next(error);
-  }
-}
-
-export const updateProfile = async (req, res, next) => {
-  try {
-    const user = await findByIdAndUpdate(req.user._id, req.body, next);
-    return res.status(StatusCodes.OK).send(user);
-  } catch (error) {
     return next(error);
   }
 };
