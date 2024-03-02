@@ -16,7 +16,7 @@ import handleCors from './middlewares/handleCors';
 
 config();
 const app = express();
-app.use(handleCors());
+app.use(handleCors);
 app.use(cors());
 app.use(helmet());
 app.use(limiter);
