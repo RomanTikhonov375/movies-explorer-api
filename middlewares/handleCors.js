@@ -1,7 +1,7 @@
 const allowedCors = [
   'https://praktikum.tk',
   'http://praktikum.tk',
-  'localhost:3000',
+  'http://localhost:3000',
 ];
 
 export default function handleCors(req, res, next) {
