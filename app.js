@@ -12,9 +12,11 @@ import errorHandler from './utils/errors/errorHandler';
 import {
   NODE_ENV, PORT, DB_CONN, DB_CONN_DEV,
 } from './utils/constans';
+import handleCors from './middlewares/handleCors';
 
 config();
 const app = express();
+app.use(handleCors());
 app.use(cors());
 app.use(helmet());
 app.use(limiter);
