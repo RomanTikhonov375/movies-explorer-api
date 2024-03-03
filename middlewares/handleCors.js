@@ -2,7 +2,8 @@ const allowedCors = [
   'https://praktikum.tk',
   'http://praktikum.tk',
   'http://localhost:3000',
-  'http://api.nomoreparties.co/beatfilm-movies',
+  'https://api.nomoreparties.co/beatfilm-movies',
+  'https://romantikhonov.movies.nomoredomainswork.ru',
 ];
 
 export default function handleCors(req, res, next) {
